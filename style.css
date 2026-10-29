@@ -1,0 +1,319 @@
+:root {
+  --fundo: #f0efea;
+  --tinta-ui: #1d2238;
+  --ultramar: #24319a;
+  --tinta: #26336a;
+  --papel: #fcfaf5;
+
+  --serifa: 'Bodoni Moda', 'Didot', 'Bodoni 72', Georgia, serif;
+  --mao: 'Nanum Pen Script', 'Segoe Print', cursive;
+
+  /* altura do palco onde a pedra vira busto */
+  --h: min(calc(100svh - 11rem), 110vw, 980px);
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  min-height: 100svh;
+  color: var(--tinta-ui);
+  font-family: var(--serifa);
+  font-optical-sizing: auto;
+  background: var(--fundo);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* grão de pigmento, como parede pintada à mão */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 10;
+  opacity: .1;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .5 0 0 0 0 .5 0 0 0 0 .5 0 0 0 .9 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+:focus-visible {
+  outline: 2px solid var(--ultramar);
+  outline-offset: 4px;
+}
+
+/* ───────── galeria ───────── */
+
+.galeria {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.palco {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: var(--h);
+}
+
+/* "Feliz aniversário" do tamanho da parede, atrás da escultura */
+.nome-gigante {
+  position: absolute;
+  left: 50%;
+  top: 46%;
+  margin: 0;
+  transform: translate(-50%, -50%);
+  font-size: 30vw;
+  font-weight: 400;
+  line-height: .82;
+  letter-spacing: -.035em;
+  white-space: nowrap;
+  text-align: center;
+  color: #d6d9ce;
+  pointer-events: none;
+  user-select: none;
+}
+.nome-gigante span { display: block; }
+
+.pedra {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  height: var(--h);
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+.pedra:focus-visible { outline-offset: -8px; }
+
+/* o que a fada diz */
+.fala {
+  position: absolute;
+  left: 0; top: 0;
+  z-index: 4;
+  margin: 0;
+  max-width: min(16rem, 70vw);
+  padding: .45rem .75rem .5rem;
+  background: var(--tinta-ui);
+  color: var(--fundo);
+  font-style: italic;
+  font-size: 1rem;
+  line-height: 1.3;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .2s;
+}
+.fala.visivel { opacity: 1; }
+.fala::after {
+  content: '';
+  position: absolute;
+  left: var(--rabo, 50%);
+  bottom: -7px;
+  width: 12px; height: 7px;
+  margin-left: -6px;
+  background: inherit;
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+}
+
+.cinzel {
+  position: absolute;
+  left: 0; top: 0;
+  z-index: 3;
+  display: none;
+  width: 64px; height: 64px;
+  pointer-events: none;
+  opacity: 0;
+  filter: drop-shadow(2px 4px 3px rgb(0 0 0 / .35));
+  will-change: transform;
+}
+.cinzel.visivel { opacity: 1; }
+@media (pointer: fine) { .cinzel { display: block; } }
+.cinzel svg { display: block; transform-origin: 17% 83%; }
+.cinzel.bate svg { animation: bate .16s ease-out; }
+
+@keyframes bate {
+  0%   { transform: translate(6px, -6px) rotate(-6deg); }
+  45%  { transform: translate(-2px, 2px); }
+  100% { transform: none; }
+}
+
+/* ───────── chão: onde a pedra desliza e a obra é apresentada ───────── */
+
+.chao {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: start;
+  gap: 1.5rem 3rem;
+  min-height: 9rem;
+  padding: 1.5rem clamp(16px, 5vw, 4rem) 1.5rem;
+  box-shadow: inset 0 1px 0 rgb(29 34 56 / .14);
+}
+
+.dica {
+  margin: 0;
+  font-style: italic;
+  font-size: 1.0625rem;
+  color: rgb(29 34 56 / .7);
+  min-height: 1.5em;
+  transition: opacity .4s;
+}
+.dica.troca { opacity: 0; }
+.revelada .dica { display: none; }
+
+.acoes {
+  display: flex;
+  gap: 1.5rem;
+  margin-top: .5rem;
+}
+
+.botao-texto {
+  appearance: none;
+  border: 0;
+  background: none;
+  padding: .6rem 0;
+  font: italic 1rem/1.2 var(--serifa);
+  color: rgb(29 34 56 / .8);
+  text-decoration: underline;
+  text-decoration-color: rgb(29 34 56 / .3);
+  text-underline-offset: .3em;
+  cursor: pointer;
+  transition: color .2s, text-decoration-color .2s;
+}
+.botao-texto:hover { color: var(--ultramar); text-decoration-color: var(--ultramar); }
+
+.ir-carta { display: none; }
+.revelada #pular { display: none; }
+.revelada .ir-carta { display: inline-block; animation: surge 1s 1.6s both; }
+
+@keyframes surge { from { opacity: 0; transform: translateY(6px); } }
+
+/* etiqueta de museu, em texto corrido */
+.etiqueta {
+  width: 19rem;
+  font-size: .875rem;
+  line-height: 1.45;
+  color: rgb(29 34 56 / .68);
+  opacity: 0;
+  transition: opacity 1s 1.2s;
+}
+.revelada .etiqueta { opacity: 1; }
+.etiqueta p { margin: 0; }
+.etiqueta-nome {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--tinta-ui);
+}
+.etiqueta-obra { font-style: italic; }
+.etiqueta-nota {
+  margin-top: .6rem !important;
+  padding-top: .6rem;
+  border-top: 1px solid rgb(29 34 56 / .15);
+}
+
+@media (max-width: 700px) {
+  .chao { grid-template-columns: 1fr; }
+  .etiqueta { width: auto; display: none; }
+  .revelada .etiqueta { display: block; }
+}
+
+/* ───────── correio ───────── */
+
+.correio {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 5rem 16px 4rem;
+}
+
+/* camada onde a fada voa enquanto escreve; não bloqueia cliques */
+.fada-carta {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+  pointer-events: none;
+}
+
+#carta-toda { margin-top: 1.25rem; }
+
+/* a carta */
+.carta {
+  --linha: 2.4rem;
+  position: relative;
+  width: min(36rem, 100%);
+  padding: 3rem clamp(1.5rem, 6vw, 3.5rem) 3.5rem;
+  background:
+    linear-gradient(to bottom, transparent 32.8%, rgb(0 0 0 / .045) 33.3%, rgb(255 255 255 / .5) 33.6%, transparent 34.4%),
+    linear-gradient(to bottom, transparent 65.8%, rgb(0 0 0 / .045) 66.3%, rgb(255 255 255 / .5) 66.6%, transparent 67.4%),
+    repeating-linear-gradient(to bottom, transparent 0 calc(var(--linha) - 1px), rgb(38 51 106 / .1) calc(var(--linha) - 1px) var(--linha)) 0 2.85rem / 100% 100% no-repeat,
+    var(--papel);
+  color: var(--tinta);
+  box-shadow: 0 30px 50px -22px rgb(60 50 40 / .4);
+  transform-origin: top center;
+}
+
+.carta-texto p,
+.carta-assinatura {
+  margin: 0 0 var(--linha);
+  font-family: var(--mao);
+  font-size: clamp(1.6rem, 5vw, 1.95rem);
+  line-height: var(--linha);
+}
+.carta-texto p:first-child { margin-bottom: 0; }
+.carta-texto p:last-child { margin-bottom: var(--linha); }
+
+/* cada letra espera a pena passar */
+.carta .l { opacity: 0; transition: opacity .25s; }
+.carta .l.v { opacity: 1; }
+
+.carta-assinatura {
+  text-align: right;
+  margin-bottom: 0;
+}
+
+.carta-selo {
+  position: absolute;
+  right: 2rem;
+  bottom: 1.1rem;
+  width: 2.2rem;
+  height: 2.2rem;
+  fill: rgb(217 121 139 / .85);
+  transform: rotate(-14deg);
+  opacity: 0;
+}
+.carta-selo.v { opacity: 1; animation: carimbo .4s cubic-bezier(.3, 1.6, .5, 1) both; }
+@keyframes carimbo { from { opacity: 0; transform: rotate(-14deg) scale(1.8); } }
+
+.rodape {
+  display: flex;
+  justify-content: center;
+  padding: 0 16px 3rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-delay: 0s !important;
+    transition-duration: .01ms !important;
+    transition-delay: 0s !important;
+  }
+}

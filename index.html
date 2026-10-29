@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#f0efea">
+  <title>Uma estátua para ela</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath fill='%23d9798b' d='M16 28C6 21 2 15 2 10c0-4.5 3.5-7 7-7 3 0 5.5 2 7 4.5C17.5 5 20 3 23 3c3.5 0 7 2.5 7 7 0 5-4 11-14 18z'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..700&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+  <link rel="preload" href="assets/pedra.webp" as="image">
+  <link rel="stylesheet" href="style.css">
+  <script src="config.js" defer></script>
+  <script src="assets/busto.js" defer></script>
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="coracao" viewBox="0 0 32 32">
+      <path d="M16 28C6 21 2 15 2 10c0-4.5 3.5-7 7-7 3 0 5.5 2 7 4.5C17.5 5 20 3 23 3c3.5 0 7 2.5 7 7 0 5-4 11-14 18z"/>
+    </symbol>
+  </svg>
+
+  <main>
+    <section class="galeria" aria-labelledby="titulo">
+      <h1 id="titulo" class="visually-hidden">Uma estátua para <span data-nome>ela</span></h1>
+
+      <div class="palco" id="palco">
+        <p class="nome-gigante" id="nome-gigante" aria-hidden="true"><span>Feliz</span> <span>aniversário</span></p>
+
+        <canvas id="pedra" class="pedra" tabindex="0"
+          role="img" aria-label="Uma fada arrasta um bloco de pedra até o centro."></canvas>
+
+        <p class="fala" id="fala" aria-live="polite"></p>
+
+        <div class="cinzel" id="cinzel" aria-hidden="true">
+          <svg viewBox="0 0 64 64" width="64" height="64">
+            <g transform="rotate(45 32 32)">
+              <rect x="27" y="2" width="10" height="30" rx="2" fill="#7a4b2a"/>
+              <rect x="27" y="2" width="3" height="30" fill="#9a6a44"/>
+              <rect x="26" y="31" width="12" height="4" rx="1" fill="#8d8f98"/>
+              <path d="M28 35h8v18l-4 9-4-9z" fill="#c9ccd4"/>
+              <path d="M28 35h3v19l1 8-4-9z" fill="#eef0f4"/>
+            </g>
+          </svg>
+        </div>
+      </div>
+
+      <div class="chao">
+        <div class="chao-esq">
+          <p class="dica" id="dica" aria-live="polite"></p>
+          <div class="acoes">
+            <button class="botao-texto" id="pular" type="button">Pular para o final</button>
+            <a class="botao-texto ir-carta" href="#carta">Ler a carta</a>
+          </div>
+        </div>
+
+        <aside class="etiqueta" aria-label="Etiqueta da obra">
+          <p class="etiqueta-nome" data-nome></p>
+          <p class="etiqueta-obra">Retrato de uma gata, <span data-ano></span></p>
+          <p class="etiqueta-material" data-material></p>
+          <p class="etiqueta-nota" data-nota></p>
+        </aside>
+      </div>
+    </section>
+
+    <section class="correio" id="carta" aria-label="Carta">
+      <article class="carta" id="papel">
+        <div class="carta-texto" id="carta-texto"></div>
+        <p class="carta-assinatura" id="carta-assinatura"></p>
+        <svg class="carta-selo" aria-hidden="true"><use href="#coracao"/></svg>
+      </article>
+      <button class="botao-texto" id="carta-toda" type="button" hidden>Mostrar a carta toda</button>
+    </section>
+  </main>
+
+  <canvas class="fada-carta" id="fada-carta" aria-hidden="true"></canvas>
+
+  <footer class="rodape">
+    <button class="botao-texto" id="de-novo" type="button">Esculpir de novo</button>
+  </footer>
+</body>
+</html>
